@@ -1,3 +1,4 @@
+import 'package:cmc/Screens/Meeting/meetingHome.dart';
 import 'package:cmc/Screens/SplashScreens/HomePage.dart';
 import 'package:cmc/Screens/SplashScreens/LoginPage.dart';
 import 'package:cmc/Screens/SplashScreens/SignIn.dart';
@@ -9,11 +10,13 @@ class Routes {
   static final String homePage = '/home';
   static final String loginPage = '/login';
   static final String signIn = '/signin';
+  static final String meeting = '/meeting';
 
   static Map<String, WidgetBuilder> route = {
     startPage: (context) => StartPage(),
     homePage: (context) => HomePage(),
     loginPage: (context) => LoginPage(),
     signIn: (context) => SignIn(),
+    meeting: (context) => MeetingHome(),
   };
 }

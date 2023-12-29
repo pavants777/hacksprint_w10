@@ -47,43 +47,6 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(30),
-            child: TextField(
-              controller: _search,
-              focusNode: focusNode,
-              enableSuggestions: false,
-              style: TextStyle(color: Colors.black, fontSize: 15),
-              decoration: InputDecoration(
-                hintText: 'Group Search......',
-                hintStyle: TextStyle(color: Colors.black),
-                prefixIcon: Icon(Icons.search),
-                prefixIconColor: Colors.black,
-                contentPadding: EdgeInsets.all(16),
-                filled: true,
-                fillColor: Colors.grey.shade100,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide(color: Colors.blue),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide(color: Colors.grey.shade200),
-                ),
-              ),
-            ),
-          ),
-          !_search.text.isEmpty ? _searchGroupBuild() : _buildTags(),
-        ],
-      ),
-    );
-  }
-
   Widget _buildTags() {
     return Column(children: [
       SizedBox(height: 10),
@@ -116,34 +79,79 @@ class _SearchScreenState extends State<SearchScreen> {
     ]);
   }
 
-  Widget _searchGroupBuild() {
+  Widget _searchGroupBuild(String _search) {
     return StreamBuilder(
-        stream: Stream.fromFuture(
-            FirebaseFunction.getSearchGroup(context, _search.text)),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Error'),
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      stream:
+          Stream.fromFuture(FirebaseFunction.getSearchGroup(context, _search)),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-          List<GroupModels>? groups = snapshot.data;
-          if (groups!.isEmpty || groups == null) {
-            return Center(
-              child: Text('No Groups Founded'),
-            );
-          }
-          return Expanded(
-              child: ListView.builder(
+        List<GroupModels>? groups = snapshot.data;
+        if (groups!.isEmpty || groups == null) {
+          return Center(
+            child: Text('No Groups Found'),
+          );
+        }
+
+        return Expanded(
+          child: ListView.builder(
             itemCount: groups!.length,
             itemBuilder: (context, index) {
               return GroupDesign(groupuid: groups[index].groupId);
             },
-          ));
-        });
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(30),
+            child: TextField(
+              controller: _search,
+              onChanged: (value) {
+                _searchGroupBuild(value);
+              },
+              focusNode: focusNode,
+              enableSuggestions: false,
+              style: TextStyle(color: Colors.black, fontSize: 15),
+              decoration: InputDecoration(
+                hintText: 'Group Search......',
+                hintStyle: TextStyle(color: Colors.black),
+                prefixIcon: Icon(Icons.search),
+                prefixIconColor: Colors.black,
+                contentPadding: EdgeInsets.all(16),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+              ),
+            ),
+          ),
+          !_search.text.isEmpty
+              ? _searchGroupBuild(_search.text)
+              : _buildTags(),
+        ],
+      ),
+    );
   }
 }

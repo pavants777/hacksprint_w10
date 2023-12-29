@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmc/Function/FirebaseFunction.dart';
 import 'package:cmc/Function/FirebaseGroup_function.dart';
 import 'package:cmc/Models/GroupModels.dart';
 import 'package:cmc/Models/UserModels.dart';
+import 'package:cmc/Screens/Groups/CreateNewGroup.dart';
+import 'package:cmc/Screens/Meeting/CreateMeeting.dart';
 import 'package:cmc/Utills/Constant.dart';
 import 'package:cmc/Utills/PickFile.dart';
 import 'package:dio/dio.dart';
@@ -29,15 +32,35 @@ class _ChatPageState extends State<ChatPage> {
   GroupModels? group;
   List<UserModels> users = [];
   FirebaseAuth _auth = FirebaseAuth.instance;
+  late bool isAdmin = false;
+  final StreamController _messageStreamController = StreamController();
+  late Stream _messageStream;
 
-  @override
+  // Rest of the code...
+
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getUser();
+    _messageStream = FirebaseGroupFunction.getMessageFromGroup(widget.groupId);
+    initializeData();
   }
 
-  getUser() async {
+  Future<void> initializeData() async {
+    await getUser();
+    isAdmin = getAdmin();
+    print(isAdmin);
+  }
+
+  bool getAdmin() {
+    String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+    print(group?.isAdmin);
+    print(uid);
+    if (group?.isAdmin == uid) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> getUser() async {
     var querySnapshot =
         await FirebaseFirestore.instance.collection('users').get();
     GroupModels demogroup =
@@ -125,6 +148,34 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
           ),
+        ]),
+        actions: [
+          isAdmin
+              ? PopupMenuButton<String>(
+                  icon: const Icon(Icons.more_vert, color: Colors.white),
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      _buildPopupMenuItem(
+                        icon: FontAwesomeIcons.video,
+                        text: 'Create New Meeting',
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateRoom(
+                                        group: group,
+                                      )));
+                        },
+                      ),
+                      _buildPopupMenuItem(
+                        icon: FontAwesomeIcons.tasks,
+                        text: 'Create New Work',
+                        onTap: () {},
+                      ),
+                    ];
+                  },
+                )
+              : Container(),
           IconButton(
             onPressed: () {
               String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -137,12 +188,15 @@ class _ChatPageState extends State<ChatPage> {
             },
             icon: Icon(Icons.exit_to_app),
           ),
-        ]),
+          SizedBox(
+            width: 10,
+          ),
+        ],
       ),
       body: Column(children: [
         Expanded(
           child: StreamBuilder(
-            stream: FirebaseGroupFunction.getMessageFromGroup(widget.groupId),
+            stream: _messageStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Error${snapshot.error}');
@@ -152,12 +206,14 @@ class _ChatPageState extends State<ChatPage> {
               }
               List<DocumentSnapshot<Map<String, dynamic>>> messages =
                   snapshot.data!.docs;
-              return ListView(
+              return ListView.builder(
                 reverse: true,
                 shrinkWrap: true,
-                children: snapshot.data!.docs
-                    .map((e) => _buildMessageItem(e))
-                    .toList(),
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  // Make sure to convert each item to a Widget
+                  return _buildMessageItem(messages[index]);
+                },
               );
             },
           ),
@@ -406,6 +462,30 @@ class _ChatPageState extends State<ChatPage> {
               }
             },
           );
+  }
+
+  PopupMenuItem<String> _buildPopupMenuItem({
+    required IconData icon,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return PopupMenuItem<String>(
+      onTap: onTap,
+      value: text,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: const Color.fromARGB(255, 255, 255, 255),
+          ),
+          const SizedBox(width: 30),
+          Text(
+            text,
+            style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          ),
+        ],
+      ),
+    );
   }
 
   Future _downloadFile(String fileName) async {
