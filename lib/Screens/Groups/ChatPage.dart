@@ -4,8 +4,8 @@ import 'package:cmc/Function/FirebaseFunction.dart';
 import 'package:cmc/Function/FirebaseGroup_function.dart';
 import 'package:cmc/Models/GroupModels.dart';
 import 'package:cmc/Models/UserModels.dart';
-import 'package:cmc/Screens/Groups/CreateNewGroup.dart';
 import 'package:cmc/Screens/Meeting/CreateMeeting.dart';
+import 'package:cmc/Screens/ToDo/createtodo.dart';
 import 'package:cmc/Utills/Constant.dart';
 import 'package:cmc/Utills/PickFile.dart';
 import 'package:dio/dio.dart';
@@ -170,7 +170,13 @@ class _ChatPageState extends State<ChatPage> {
                       _buildPopupMenuItem(
                         icon: FontAwesomeIcons.tasks,
                         text: 'Create New Work',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CreateToDo(group: group)));
+                        },
                       ),
                     ];
                   },
@@ -533,9 +539,11 @@ class _AvtharState extends State<Avthar> {
 
   void getUser() async {
     UserModels? userref = await FirebaseFunction.getCurrentUser(widget.uid);
-    setState(() {
-      user = userref;
-    });
+    if (mounted) {
+      setState(() {
+        user = userref;
+      });
+    }
   }
 
   @override

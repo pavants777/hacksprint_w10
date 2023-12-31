@@ -65,10 +65,21 @@ class _MeetingHomeState extends State<MeetingHome> {
           );
         } else {
           meetings = snapshot.data!;
+          List<MeetingModels> sortMeeting = meetings
+                  ?.where((group) => isUserInGroup(
+                      group, FirebaseAuth.instance.currentUser!.uid))
+                  .toList() ??
+              [];
+
+          if (sortMeeting.isEmpty) {
+            return Center(
+              child: Text('No Meetings Are Scheduled For You'),
+            );
+          }
           return ListView.builder(
-            itemCount: meetings?.length ?? 0,
+            itemCount: sortMeeting?.length ?? 0,
             itemBuilder: (context, index) {
-              return _buildMeetingsCard(meetings![index]);
+              return _buildMeetingsCard(sortMeeting![index]);
             },
           );
         }
@@ -167,5 +178,9 @@ class _MeetingHomeState extends State<MeetingHome> {
         ),
       ),
     );
+  }
+
+  bool isUserInGroup(MeetingModels group, String userId) {
+    return group.members.any((user) => user == userId);
   }
 }
