@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cmc/Provider/UserProvider.dart';
 import 'package:cmc/Routes/page_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _EmailVerificationState extends State<EmailVerification> {
     if (!isEmailVerified) {
       sendVerificationEmail();
     } else {
+      Provider.of<UserProvider>(context, listen: false).emailVerfication();
       Navigator.pushReplacementNamed(context, Routes.homePage);
     }
 
@@ -36,6 +38,7 @@ class _EmailVerificationState extends State<EmailVerification> {
     });
     if (isEmailVerified) {
       timer!.cancel();
+      Provider.of<UserProvider>(context, listen: false).emailVerfication();
       Navigator.pop(context);
     }
   }

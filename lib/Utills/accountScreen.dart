@@ -89,7 +89,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     bottom: 0,
                     left: 35,
                     child: emailWidget(
-                        FirebaseAuth.instance.currentUser?.emailVerified ??
+                        Provider.of<UserProvider>(context, listen: false)
+                                .user
+                                ?.isEmail ??
                             false,
                         context)),
               ],

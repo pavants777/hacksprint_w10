@@ -130,12 +130,12 @@ class _ChatPageState extends State<ChatPage> {
                                       child: Avthar(uid: group!.users[index])),
                                 ),
                               ),
-                              SizedBox(
-                                width: 20,
+                              const SizedBox(
+                                width: 40,
                               ),
                               Text(
                                 '${group?.users.length}+ Joined',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.green, fontSize: 15),
                               )
                             ],
@@ -225,7 +225,7 @@ class _ChatPageState extends State<ChatPage> {
                 padding: EdgeInsets.all(10),
                 child: TextField(
                   controller: _message,
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     hintText: 'Message',
                     hintStyle: TextStyle(color: Colors.black),
@@ -430,7 +430,7 @@ class _ChatPageState extends State<ChatPage> {
                                 const SizedBox(width: 20),
                                 IconButton(
                                     onPressed: () {},
-                                    icon: Icon(
+                                    icon: const Icon(
                                       FontAwesomeIcons.filePdf,
                                       color: Colors.red,
                                     )),

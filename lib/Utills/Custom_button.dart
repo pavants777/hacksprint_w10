@@ -29,6 +29,9 @@ Widget CustomButton(String title, IconData icon, VoidCallback onTap) {
             ),
             Text(
               title,
+              softWrap: false,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   color: const Color.fromARGB(255, 249, 249, 249),
                   fontSize: 20),

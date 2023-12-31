@@ -29,10 +29,12 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   getTags() async {
-    List<String> tags = await FirebaseFunction.getAllTags(context);
-    setState(() {
-      suggestedTags = tags.map((e) => e).toSet();
-    });
+    if (mounted) {
+      List<String> tags = await FirebaseFunction.getAllTags(context);
+      setState(() {
+        suggestedTags = tags.map((e) => e).toSet();
+      });
+    }
   }
 
   @override

@@ -1,5 +1,4 @@
 import 'package:cmc/Function/FirebaseFunction.dart';
-import 'package:cmc/Function/FirebaseGroup_function.dart';
 import 'package:cmc/Models/GroupModels.dart';
 import 'package:cmc/Models/UserModels.dart';
 import 'package:cmc/Provider/UserProvider.dart';
@@ -7,11 +6,12 @@ import 'package:cmc/Screens/Groups/AI/ChatWithAi.dart';
 import 'package:cmc/Screens/Groups/ChatPage.dart';
 import 'package:cmc/Screens/Groups/CreateNewGroup.dart';
 import 'package:cmc/Utills/AppBar.dart';
-import 'package:cmc/Utills/CompanyLogo.dart';
+import 'package:cmc/Utills/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class GroupHome extends StatefulWidget {
@@ -35,10 +35,12 @@ class _GroupHomeState extends State<GroupHome> {
   }
 
   getUser() async {
-    UserModels? userref = await FirebaseFunction.getCurrentUser(uid);
-    setState(() {
-      user = userref;
-    });
+    if (mounted) {
+      UserModels? userref = await FirebaseFunction.getCurrentUser(uid);
+      setState(() {
+        user = userref;
+      });
+    }
   }
 
   @override
@@ -85,9 +87,7 @@ class _GroupHomeState extends State<GroupHome> {
                 style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return Indicator();
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(
             child: Text('No Groups Available',

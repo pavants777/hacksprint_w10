@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmc/Function/FirebaseFunction.dart';
 import 'package:cmc/Models/UserModels.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,6 @@ class UserProvider extends ChangeNotifier {
   void initialize() async {
     print('function initialize');
     print(isUser);
-
     try {
       uid = FirebaseAuth.instance.currentUser!.uid;
       print(uid);
@@ -32,6 +32,16 @@ class UserProvider extends ChangeNotifier {
       print('Error during initialization: $error');
       // Handle the error as needed
     }
+  }
+
+  void emailVerfication() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .update({'isEmail': true});
+
+    user?.isEmail = true;
+    notifyListeners();
   }
 
   void signOut() {

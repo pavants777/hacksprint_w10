@@ -4,6 +4,7 @@ import 'package:cmc/Models/MeetingModels.dart';
 import 'package:cmc/Models/UserModels.dart';
 import 'package:cmc/Screens/Meeting/LiveMeeting.dart';
 import 'package:cmc/Utills/AppBar.dart';
+import 'package:cmc/Utills/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -56,9 +57,7 @@ class _MeetingHomeState extends State<MeetingHome> {
                 style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return Indicator();
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(
             child: Text('No Meetings Available',

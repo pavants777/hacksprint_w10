@@ -5,6 +5,7 @@ import 'package:cmc/Screens/Groups/GroupHome.dart';
 import 'package:cmc/Screens/Meeting/meetingHome.dart';
 import 'package:cmc/Screens/Search/searchHome.dart';
 import 'package:cmc/Screens/ToDo/todoHome.dart';
+import 'package:cmc/Utills/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,9 +42,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, _user, _) {
       return (!_user.isUser)
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
+          ? Indicator()
           : Scaffold(
               body: page,
               bottomNavigationBar: BottomNavigationBar(

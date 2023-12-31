@@ -66,13 +66,23 @@ class _PickFileState extends State<PickFile> {
                           width: double.infinity,
                           height: 500,
                         )
-                      : Image.file(
-                          File(
-                            pickedFile?.path ?? '',
-                          ),
-                          width: double.infinity,
-                          height: 200,
-                          fit: BoxFit.cover,
+                      : Stack(
+                          children: [
+                            Image.file(
+                              File(
+                                pickedFile?.path ?? '',
+                              ),
+                              width: double.infinity,
+                              height: 500,
+                              fit: BoxFit.cover,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 50,
+                              child:
+                                  Text('${pickedFile?.name ?? 'Unknown File'}'),
+                            ),
+                          ],
                         ),
                 ),
               ),
