@@ -1,12 +1,11 @@
 import 'package:cmc/Provider/UserProvider.dart';
 import 'package:cmc/Routes/page_routes.dart';
-import 'package:cmc/Utills/indicator.dart';
 import 'package:cmc/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           create: (context) => UserProvider(),
         )
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'ClassMatesCorner',
         theme: ThemeData.dark(

@@ -37,6 +37,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     var _user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
@@ -124,16 +125,19 @@ class _AccountScreenState extends State<AccountScreen> {
               "Edit Profile",
               FontAwesomeIcons.userPen,
               () {},
+              screenWidth,
             ),
             CustomButton(
-              "Contribute to the project",
+              "Contribute to the project  noting is impossible when ",
               FontAwesomeIcons.github,
               () {},
+              screenWidth,
             ),
             CustomButton(
               "Terms and Conditions",
               FontAwesomeIcons.fileInvoice,
               () {},
+              screenWidth,
             ),
             CustomButton(
               "Privacy Policy",
@@ -141,6 +145,7 @@ class _AccountScreenState extends State<AccountScreen> {
               () {
                 //TODO: Launch URL in webView
               },
+              screenWidth,
             ),
           ],
         )),

@@ -5,6 +5,8 @@ import 'package:cmc/Routes/page_routes.dart';
 import 'package:cmc/Screens/SplashScreens/UserInfoScreens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
 
 class FirebaseSplashFunction {
@@ -18,11 +20,13 @@ class FirebaseSplashFunction {
       Provider.of<UserProvider>(context, listen: false).initialize();
       Navigator.pushReplacementNamed(context, Routes.homePage);
     }).catchError((e, stackTrace) {
-      final snackBar = SnackBar(
-        content: Text(e.message!),
-        duration: Duration(seconds: 2),
+      Get.snackbar(
+        "Error In Login",
+        e.message!,
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        duration: Duration(seconds: 10),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
@@ -33,11 +37,13 @@ class FirebaseSplashFunction {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => UserSetUP()));
     }).catchError((e) {
-      final snackBar = SnackBar(
-        content: Text(e.message!),
-        duration: Duration(seconds: 2),
+      Get.snackbar(
+        "Error In SignUP",
+        e.message!,
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        duration: Duration(seconds: 10),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 

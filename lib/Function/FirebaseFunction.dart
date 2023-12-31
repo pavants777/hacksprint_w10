@@ -5,6 +5,8 @@ import 'package:cmc/Models/GroupModels.dart';
 import 'package:cmc/Models/UserModels.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class FirebaseFunction {
   static Future<UserModels?> getCurrentUser(String? users) async {
@@ -67,7 +69,13 @@ class FirebaseFunction {
 
       return res;
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      Get.snackbar(
+        "Error In Getting Groups",
+        e.message!,
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        duration: Duration(seconds: 10),
+      );
     }
     return [];
   }
