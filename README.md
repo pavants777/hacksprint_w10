@@ -5,9 +5,18 @@ A new Flutter project .
 ## Getting Started
 
 ## Clone 
+/*
+   git clone https://github.com/pavants777/appchat.git
 
-   git clone 
+   cd appchat
 
+   flutter pub get
+
+   flutter build apk   // if your need apk
+ 
+   flutter run   // to run the flutter in emulators
+
+*/
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
