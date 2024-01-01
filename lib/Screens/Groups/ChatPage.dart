@@ -14,9 +14,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gallery_saver/gallery_saver.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:open_file/open_file.dart';
-import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ChatPage extends StatefulWidget {
@@ -28,16 +26,17 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  TextEditingController _message = TextEditingController();
+  final TextEditingController _message = TextEditingController();
   GroupModels? group;
   List<UserModels> users = [];
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   late bool isAdmin = false;
   final StreamController _messageStreamController = StreamController();
   late Stream _messageStream;
 
   // Rest of the code...
 
+  @override
   void initState() {
     super.initState();
     _messageStream = FirebaseGroupFunction.getMessageFromGroup(widget.groupId);
@@ -68,7 +67,7 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       group = demogroup;
       users = querySnapshot.docs
-          .map((doc) => UserModels.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) => UserModels.fromJson(doc.data()))
           .toList();
     });
   }
@@ -100,7 +99,7 @@ class _ChatPageState extends State<ChatPage> {
                     child: CircleAvatar(
                       maxRadius: screenWidth * 0.045,
                       backgroundImage: NetworkImage(
-                          '${group?.profileUrl ?? Constant.image}'),
+                          group?.profileUrl ?? Constant.image),
                     ),
                   ),
                   SizedBox(
@@ -114,8 +113,8 @@ class _ChatPageState extends State<ChatPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${group?.groupName ?? ''}',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                            group?.groupName ?? '',
+                            style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -192,9 +191,9 @@ class _ChatPageState extends State<ChatPage> {
                 'users': FieldValue.arrayRemove([uid]),
               });
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
         ],
@@ -228,19 +227,19 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   controller: _message,
                   style: const TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     hintText: 'Message',
-                    hintStyle: TextStyle(color: Colors.black),
+                    hintStyle: const TextStyle(color: Colors.black),
                     contentPadding: EdgeInsets.only(left: screenWidth * 0.2),
                     filled: true,
                     fillColor: Colors.grey.shade100,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(100),
-                      borderSide: BorderSide(color: Colors.blue),
+                      borderSide: const BorderSide(color: Colors.blue),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(100),
@@ -251,7 +250,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(40),
@@ -274,7 +273,7 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ))),
             Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(40),
@@ -313,7 +312,7 @@ class _ChatPageState extends State<ChatPage> {
     String period = isMorning ? 'AM' : 'PM';
     String formattedString = '$hours : $minute $period';
 
-    Color _color = (data['senderId'] == _auth.currentUser!.uid)
+    Color color = (data['senderId'] == _auth.currentUser!.uid)
         ? const Color.fromARGB(255, 172, 247, 175)
         : Colors.white;
 
@@ -348,13 +347,13 @@ class _ChatPageState extends State<ChatPage> {
                           padding: const EdgeInsets.only(left: 5, right: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: _color,
+                            color: color,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${user?.userName ?? ''}',
+                                user?.userName ?? '',
                                 style: const TextStyle(
                                   fontSize: 15,
                                   color: Colors.blue,
@@ -420,13 +419,13 @@ class _ChatPageState extends State<ChatPage> {
                             padding: const EdgeInsets.only(left: 5, right: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: _color,
+                              color: color,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${user?.userName ?? ''}',
+                                  user?.userName ?? '',
                                   style: const TextStyle(
                                     fontSize: 15,
                                     color: Colors.blue,
@@ -501,7 +500,7 @@ class _ChatPageState extends State<ChatPage> {
       print(downloadUrl);
 
       final temp = await getTemporaryDirectory();
-      final path = '${temp.path}/${fileName}';
+      final path = '${temp.path}/$fileName';
 
       await Dio().download(downloadUrl, path);
 
@@ -522,7 +521,7 @@ class _ChatPageState extends State<ChatPage> {
 class Avthar extends StatefulWidget {
   final String uid;
 
-  Avthar({Key? key, required this.uid}) : super(key: key);
+  const Avthar({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<Avthar> createState() => _AvtharState();

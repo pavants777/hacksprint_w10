@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int index = 0;
-  late Widget page = GroupHome();
+  late Widget page = const GroupHome();
   late String? uid;
   late UserModels? user;
 
@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, _user, _) {
-      return (!_user.isUser)
-          ? Indicator()
+    return Consumer<UserProvider>(builder: (context, user, _) {
+      return (!user.isUser)
+          ? const Indicator()
           : Scaffold(
               body: page,
               bottomNavigationBar: BottomNavigationBar(
@@ -69,22 +69,22 @@ class _HomePageState extends State<HomePage> {
                   switch (index) {
                     case 0:
                       setState(() {
-                        page = GroupHome();
+                        page = const GroupHome();
                       });
                       break;
                     case 1:
                       setState(() {
-                        page = SearchScreen();
+                        page = const SearchScreen();
                       });
                       break;
                     case 2:
                       setState(() {
-                        page = MeetingHome();
+                        page = const MeetingHome();
                       });
                       break; // <-- Add break statement here
                     case 3:
                       setState(() {
-                        page = ToDoHome();
+                        page = const ToDoHome();
                       });
                       break; // <-- Add break statement here
                     default:

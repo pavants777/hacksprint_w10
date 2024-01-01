@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserSetUP extends StatefulWidget {
-  UserSetUP({
+  const UserSetUP({
     Key? key,
   }) : super(key: key);
 
@@ -19,15 +19,15 @@ class UserSetUP extends StatefulWidget {
 }
 
 class _UserSetUPState extends State<UserSetUP> {
-  TextEditingController _userName = TextEditingController();
-  TextEditingController _collegeName = TextEditingController();
-  TextEditingController _branch = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _collegeName = TextEditingController();
+  final TextEditingController _branch = TextEditingController();
   File? image;
 
   Future<void> selectImage() async {
-    File? _image = await pickImageFromGallery(context);
+    File? image = await pickImageFromGallery(context);
     setState(() {
-      image = _image;
+      image = image;
     });
   }
 
@@ -45,7 +45,7 @@ class _UserSetUPState extends State<UserSetUP> {
     var size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('User SetUp'),
+        title: const Text('User SetUp'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -68,7 +68,7 @@ class _UserSetUPState extends State<UserSetUP> {
                       onPressed: () {
                         selectImage();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add_a_photo,
                         size: 30,
                       ),
@@ -77,13 +77,13 @@ class _UserSetUPState extends State<UserSetUP> {
                 ],
               ),
               const SizedBox(height: 40),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: _userName,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(20),
-                    prefixIcon: Icon(Icons.school),
+                    contentPadding: const EdgeInsets.all(20),
+                    prefixIcon: const Icon(Icons.school),
                     hintText: 'UserName',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -92,13 +92,13 @@ class _UserSetUPState extends State<UserSetUP> {
                 ),
               ),
               const SizedBox(height: 40),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: _collegeName,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(20),
-                    prefixIcon: Icon(Icons.school),
+                    contentPadding: const EdgeInsets.all(20),
+                    prefixIcon: const Icon(Icons.school),
                     hintText: 'College Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -107,13 +107,13 @@ class _UserSetUPState extends State<UserSetUP> {
                 ),
               ),
               const SizedBox(height: 40),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: _branch,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(20),
-                    prefixIcon: Icon(Icons.book),
+                    contentPadding: const EdgeInsets.all(20),
+                    prefixIcon: const Icon(Icons.book),
                     hintText: 'Branch',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -121,13 +121,13 @@ class _UserSetUPState extends State<UserSetUP> {
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               GestureDetector(
                 onTap: () async {
                   setUserSetUp();
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Indicator()));
-                  await Future.delayed(Duration(seconds: 5));
+                      MaterialPageRoute(builder: (context) => const Indicator()));
+                  await Future.delayed(const Duration(seconds: 5));
                   Provider.of<UserProvider>(context, listen: false)
                       .initialize();
                   Navigator.pushReplacementNamed(context, Routes.homePage);
@@ -135,7 +135,12 @@ class _UserSetUPState extends State<UserSetUP> {
                 child: Container(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                   width: 150,
-                  child: Text(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: const Text(
                     'Let\'s Start',
                     style: TextStyle(
                       color: Colors.black,
@@ -143,11 +148,6 @@ class _UserSetUPState extends State<UserSetUP> {
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: Colors.black),
                   ),
                 ),
               ),

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EmailVerification extends StatefulWidget {
+  const EmailVerification({super.key});
+
   @override
   State<EmailVerification> createState() => _EmailVerificationState();
 }
@@ -26,7 +28,7 @@ class _EmailVerificationState extends State<EmailVerification> {
       Navigator.pushReplacementNamed(context, Routes.homePage);
     }
 
-    timer = Timer.periodic(Duration(seconds: 3), (_) {
+    timer = Timer.periodic(const Duration(seconds: 3), (_) {
       checkEmailVerified();
     });
   }

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cmc/Utills/Constant.dart';
-import 'package:flutter/material.dart';
 
 class ChatGPTMessages {
   String message;

@@ -25,7 +25,7 @@ class SearchChat extends StatefulWidget {
 }
 
 class _SearchChatState extends State<SearchChat> {
-  TextEditingController _message = TextEditingController();
+  final TextEditingController _message = TextEditingController();
   late bool checkUser;
   GroupModels? group;
   late UserProvider _user;
@@ -86,7 +86,7 @@ class _SearchChatState extends State<SearchChat> {
                       child: CircleAvatar(
                         maxRadius: screenWidth * 0.045,
                         backgroundImage: NetworkImage(
-                          '${group?.profileUrl ?? Constant.image}',
+                          group?.profileUrl ?? Constant.image,
                         ),
                       ),
                     ),
@@ -101,11 +101,11 @@ class _SearchChatState extends State<SearchChat> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${group?.groupName ?? ''}',
-                              style: TextStyle(fontWeight: FontWeight.w600),
+                              group?.groupName ?? '',
+                              style: const TextStyle(fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              'Total Members : ${group?.users?.length}',
+                              'Total Members : ${group?.users.length}',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 15,
@@ -133,7 +133,7 @@ class _SearchChatState extends State<SearchChat> {
                   return Text('Error${snapshot.error}');
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('Loading');
+                  return const Text('Loading');
                 }
                 List<DocumentSnapshot<Map<String, dynamic>>> messages =
                     snapshot.data!.docs;
@@ -186,7 +186,7 @@ class _SearchChatState extends State<SearchChat> {
       children: [
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               controller: _message,
               style: const TextStyle(color: Colors.black),
@@ -198,7 +198,7 @@ class _SearchChatState extends State<SearchChat> {
                 fillColor: Colors.grey.shade100,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
-                  borderSide: BorderSide(color: Colors.blue),
+                  borderSide: const BorderSide(color: Colors.blue),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
@@ -209,7 +209,7 @@ class _SearchChatState extends State<SearchChat> {
           ),
         ),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.blue,
             borderRadius: BorderRadius.circular(40),
@@ -233,7 +233,7 @@ class _SearchChatState extends State<SearchChat> {
   }
 
   Widget _buildMessageItem(DocumentSnapshot document) {
-    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     Timestamp timestamp = data['timestamp'];
     DateTime dateTime = timestamp.toDate();
@@ -249,11 +249,11 @@ class _SearchChatState extends State<SearchChat> {
     String period = isMorning ? 'AM' : 'PM';
     String formattedString = '$hours : $minute $period';
 
-    Color _color = (data['senderId'] == _auth.currentUser!.uid)
+    Color color = (data['senderId'] == auth.currentUser!.uid)
         ? const Color.fromARGB(255, 172, 247, 175)
         : Colors.white;
 
-    var alignment = (data['senderId'] == _auth.currentUser!.uid)
+    var alignment = (data['senderId'] == auth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
 
@@ -272,11 +272,11 @@ class _SearchChatState extends State<SearchChat> {
                     padding: const EdgeInsets.all(9.0),
                     child: Column(
                       crossAxisAlignment:
-                          (data['senderId'] == _auth.currentUser!.uid)
+                          (data['senderId'] == auth.currentUser!.uid)
                               ? CrossAxisAlignment.end
                               : CrossAxisAlignment.start,
                       mainAxisAlignment:
-                          (data['senderId'] == _auth.currentUser!.uid)
+                          (data['senderId'] == auth.currentUser!.uid)
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                       children: [
@@ -284,13 +284,13 @@ class _SearchChatState extends State<SearchChat> {
                           padding: const EdgeInsets.only(left: 5, right: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color: _color,
+                            color: color,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${user?.userName ?? ''}',
+                                user?.userName ?? '',
                                 style: const TextStyle(
                                   fontSize: 15,
                                   color: Colors.blue,
@@ -344,11 +344,11 @@ class _SearchChatState extends State<SearchChat> {
                       padding: const EdgeInsets.all(9.0),
                       child: Column(
                         crossAxisAlignment:
-                            (data['senderId'] == _auth.currentUser!.uid)
+                            (data['senderId'] == auth.currentUser!.uid)
                                 ? CrossAxisAlignment.end
                                 : CrossAxisAlignment.start,
                         mainAxisAlignment:
-                            (data['senderId'] == _auth.currentUser!.uid)
+                            (data['senderId'] == auth.currentUser!.uid)
                                 ? MainAxisAlignment.end
                                 : MainAxisAlignment.start,
                         children: [
@@ -356,13 +356,13 @@ class _SearchChatState extends State<SearchChat> {
                             padding: const EdgeInsets.only(left: 5, right: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: _color,
+                              color: color,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${user?.userName ?? ''}',
+                                  user?.userName ?? '',
                                   style: const TextStyle(
                                     fontSize: 15,
                                     color: Colors.blue,
@@ -413,7 +413,7 @@ class _SearchChatState extends State<SearchChat> {
       print(downloadUrl);
 
       final temp = await getTemporaryDirectory();
-      final path = '${temp.path}/${fileName}';
+      final path = '${temp.path}/$fileName';
 
       await Dio().download(downloadUrl, path);
 

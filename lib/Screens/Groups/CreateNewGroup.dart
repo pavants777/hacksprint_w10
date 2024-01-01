@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cmc/Function/FirebaseGroup_function.dart';
-import 'package:cmc/Routes/page_routes.dart';
 import 'package:cmc/Utills/Constant.dart';
 import 'package:cmc/Utills/ImagePicker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,16 +13,16 @@ class CreateNewGroup extends StatefulWidget {
 }
 
 class _CreateNewGroupState extends State<CreateNewGroup> {
-  TextEditingController _groupNameEditingController = TextEditingController();
-  TextEditingController _tagsEditingController = TextEditingController();
+  final TextEditingController _groupNameEditingController = TextEditingController();
+  final TextEditingController _tagsEditingController = TextEditingController();
   String profileUrl = Constant.image;
   File? image;
   List<String> tags = [];
 
   Future<void> selectImage() async {
-    File? _image = await pickImageFromGallery(context);
+    File? image = await pickImageFromGallery(context);
     setState(() {
-      image = _image;
+      image = image;
     });
   }
 
@@ -31,13 +30,13 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
     String user = FirebaseAuth.instance.currentUser!.uid;
     profileUrl = await storeFileToFirebase(
         'profilePhoto/group/${_groupNameEditingController.text}', image);
-    if (_groupNameEditingController.text.isNotEmpty && user != null) {
+    if (_groupNameEditingController.text.isNotEmpty) {
       FirebaseGroupFunction.createGroup(
           _groupNameEditingController.text, [user], profileUrl, tags, context);
       _groupNameEditingController.clear();
       _tagsEditingController.clear();
     } else {
-      print('${user}');
+      print(user);
     }
   }
 
@@ -50,7 +49,7 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
         title: const Text(
           'Create Group',
@@ -64,7 +63,7 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Stack(
@@ -82,7 +81,7 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
                       onPressed: () {
                         selectImage();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add_a_photo,
                         size: 30,
                       ),
@@ -90,16 +89,16 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: _groupNameEditingController,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(20),
-                    prefixIcon: Icon(Icons.group),
+                    contentPadding: const EdgeInsets.all(20),
+                    prefixIcon: const Icon(Icons.group),
                     hintText: 'GroupName',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -110,7 +109,7 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
               const SizedBox(
                 height: 40,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: Row(
                   children: [
@@ -118,8 +117,8 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
                       child: TextField(
                         controller: _tagsEditingController,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(20),
-                          prefixIcon: Icon(Icons.tag),
+                          contentPadding: const EdgeInsets.all(20),
+                          prefixIcon: const Icon(Icons.tag),
                           hintText: 'Enter Tags To Add',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -136,13 +135,13 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
                           });
                         }
                       },
-                      child: Text('Add'),
+                      child: const Text('Add'),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 child: Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
@@ -169,17 +168,17 @@ class _CreateNewGroupState extends State<CreateNewGroup> {
                 child: Container(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                   width: 100,
-                  child: Text(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Text(
                     ' Create ',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
               ),

@@ -5,7 +5,6 @@ import 'package:cmc/Provider/UserProvider.dart';
 import 'package:cmc/Screens/Meeting/LiveMeeting.dart';
 import 'package:cmc/Utills/CompanyLogo.dart';
 import 'package:cmc/Utills/Constant.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +17,8 @@ class CreateRoom extends StatefulWidget {
 }
 
 class _CreateRoomState extends State<CreateRoom> {
-  TextEditingController _roomName = TextEditingController();
-  TextEditingController _tagsEditingController = TextEditingController();
+  final TextEditingController _roomName = TextEditingController();
+  final TextEditingController _tagsEditingController = TextEditingController();
   List<String> tags = [];
   int roomId = 9999999;
 
@@ -34,7 +33,7 @@ class _CreateRoomState extends State<CreateRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Audio Room'),
+        title: const Text('Create Audio Room'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -43,23 +42,23 @@ class _CreateRoomState extends State<CreateRoom> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               CompanyLogo(200, 200),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: _roomName,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(20),
-                    prefixIcon: Icon(Icons.group),
+                    contentPadding: const EdgeInsets.all(20),
+                    prefixIcon: const Icon(Icons.group),
                     hintText: 'RoomName',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -70,7 +69,7 @@ class _CreateRoomState extends State<CreateRoom> {
               const SizedBox(
                 height: 40,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: Row(
                   children: [
@@ -78,8 +77,8 @@ class _CreateRoomState extends State<CreateRoom> {
                       child: TextField(
                         controller: _tagsEditingController,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(20),
-                          prefixIcon: Icon(Icons.tag),
+                          contentPadding: const EdgeInsets.all(20),
+                          prefixIcon: const Icon(Icons.tag),
                           hintText: 'Enter Tags To Add',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -96,13 +95,13 @@ class _CreateRoomState extends State<CreateRoom> {
                           });
                         }
                       },
-                      child: Text('Add'),
+                      child: const Text('Add'),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 child: Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
@@ -128,17 +127,17 @@ class _CreateRoomState extends State<CreateRoom> {
                 child: Container(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                   width: 100,
-                  child: Text(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Text(
                     ' Create ',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
               ),
@@ -150,19 +149,19 @@ class _CreateRoomState extends State<CreateRoom> {
   }
 
   createMeeting() async {
-    var _user = Provider.of<UserProvider>(context, listen: false);
+    var user = Provider.of<UserProvider>(context, listen: false);
     if (_roomName.text.isNotEmpty) {
       MeetingFunction.createMeeting(_roomName.text, roomId.toString(),
-          [_user.uid], tags, widget.group?.users ?? []);
+          [user.uid], tags, widget.group?.users ?? []);
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => LivePage(
                     roomID: roomId.toString(),
                     isHost: true,
-                    userName: _user.user?.userName ?? 'Unkown',
-                    userUid: _user.uid,
-                    profilePhoto: _user.user?.profilePhoto ?? Constant.image,
+                    userName: user.user?.userName ?? 'Unkown',
+                    userUid: user.uid,
+                    profilePhoto: user.user?.profilePhoto ?? Constant.image,
                   )));
     }
   }

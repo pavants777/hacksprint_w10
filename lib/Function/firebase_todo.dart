@@ -62,9 +62,9 @@ class FirebaseToDo {
               .get();
 
       List<ToDoModels> todos = [];
-      querySnapshot.docs.forEach((doc) {
-        todos.add(ToDoModels.fromJson(doc.data() as Map<String, dynamic>));
-      });
+      for (var doc in querySnapshot.docs) {
+        todos.add(ToDoModels.fromJson(doc.data()));
+      }
 
       yield todos;
     } catch (e) {

@@ -15,7 +15,7 @@ Future<File?> pickImageFromGallery(BuildContext context) async {
   } catch (e) {
     final snackBar = SnackBar(
       content: Text(e.toString()),
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

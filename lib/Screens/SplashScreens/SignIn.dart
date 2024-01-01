@@ -1,6 +1,5 @@
 import 'package:cmc/Function/firebase_function.dart';
 import 'package:cmc/Routes/page_routes.dart';
-import 'package:cmc/Screens/SplashScreens/UserInfoScreens.dart';
 import 'package:cmc/Utills/CompanyLogo.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +11,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
-  TextEditingController _conPassword = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _conPassword = TextEditingController();
 
   @override
   void dispose() {
@@ -40,13 +39,13 @@ class _SignInState extends State<SignIn> {
               children: [
                 CompanyLogo(150, 150),
                 Padding(padding: EdgeInsets.all(screenWidth * 0.02)),
-                Container(
+                SizedBox(
                     width: 300,
                     child: TextField(
                       controller: _email,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20),
-                        prefixIcon: Icon(Icons.email),
+                        contentPadding: const EdgeInsets.all(20),
+                        prefixIcon: const Icon(Icons.email),
                         hintText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -54,14 +53,14 @@ class _SignInState extends State<SignIn> {
                       ),
                     )),
                 Padding(padding: EdgeInsets.all(screenWidth * 0.05)),
-                Container(
+                SizedBox(
                     width: 300,
                     child: TextField(
                       controller: _password,
                       obscureText: true,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20),
-                        prefixIcon: Icon(Icons.key),
+                        contentPadding: const EdgeInsets.all(20),
+                        prefixIcon: const Icon(Icons.key),
                         hintText: 'Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -69,14 +68,14 @@ class _SignInState extends State<SignIn> {
                       ),
                     )),
                 Padding(padding: EdgeInsets.all(screenWidth * 0.05)),
-                Container(
+                SizedBox(
                     width: 300,
                     child: TextField(
                       controller: _conPassword,
                       obscureText: true,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20),
-                        prefixIcon: Icon(Icons.key),
+                        contentPadding: const EdgeInsets.all(20),
+                        prefixIcon: const Icon(Icons.key),
                         hintText: 'Confirm Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -92,7 +91,7 @@ class _SignInState extends State<SignIn> {
                       FirebaseSplashFunction.createUser(
                           _email.text, _password.text, context);
                     } else {
-                      final snackBar = SnackBar(
+                      const snackBar = SnackBar(
                         content: Text('Password is not Matching'),
                         duration: Duration(seconds: 5),
                       );
@@ -105,7 +104,10 @@ class _SignInState extends State<SignIn> {
                   child: Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     width: 100,
-                    child: Text(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)),
+                    child: const Text(
                       'SingIn',
                       style: TextStyle(
                           color: Colors.black,
@@ -113,9 +115,6 @@ class _SignInState extends State<SignIn> {
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(50)),
                   ),
                 ),
                 const SizedBox(
@@ -158,7 +157,7 @@ class _SignInState extends State<SignIn> {
                     Container(
                       height: 1,
                       width: 100,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                     ),
                   ],
                 ),

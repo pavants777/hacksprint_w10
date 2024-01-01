@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cmc/Screens/Groups/AI/FirebaseChatGPTmessages.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:provider/provider.dart';
 
 class AIScreen extends StatefulWidget {
   const AIScreen({super.key});
@@ -15,7 +14,7 @@ class AIScreen extends StatefulWidget {
 class _AIScreenState extends State<AIScreen> {
   bool isLoading = false;
   List<ChatGPTMessages> messages = [];
-  TextEditingController _message = TextEditingController();
+  final TextEditingController _message = TextEditingController();
   final StreamController<List<ChatGPTMessages>> _messagesController =
       StreamController<List<ChatGPTMessages>>();
   @override
@@ -24,7 +23,7 @@ class _AIScreenState extends State<AIScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 100,
-        title: Text(
+        title: const Text(
           'ChatWithAI',
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.yellow),
@@ -38,9 +37,9 @@ class _AIScreenState extends State<AIScreen> {
               child: _buildMessage(context),
             ),
             isLoading
-                ? Container(
+                ? const SizedBox(
                     height: 50,
-                    child: const LoadingIndicator(
+                    child: LoadingIndicator(
                       indicatorType: Indicator.ballPulse,
                       colors: [
                         Colors.yellow,
@@ -52,20 +51,20 @@ class _AIScreenState extends State<AIScreen> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: TextField(
                       controller: _message,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                       decoration: InputDecoration(
                         hintText: 'Message',
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(color: Colors.black),
                         contentPadding:
                             EdgeInsets.only(left: screenWidth * 0.2),
                         filled: true,
                         fillColor: Colors.grey.shade100,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(100),
-                          borderSide: BorderSide(color: Colors.blue),
+                          borderSide: const BorderSide(color: Colors.blue),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(100),
@@ -76,7 +75,7 @@ class _AIScreenState extends State<AIScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(40),
@@ -130,7 +129,7 @@ class _AIScreenState extends State<AIScreen> {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No messages available.'));
+          return const Center(child: Text('No messages available.'));
         } else {
           List<ChatGPTMessages> reversedMessages =
               snapshot.data!.reversed.toList();
@@ -151,7 +150,7 @@ class _AIScreenState extends State<AIScreen> {
   Widget _buildMessageItem(ChatGPTMessages message) {
     Alignment alignment =
         !message.isUser ? Alignment.centerLeft : Alignment.centerRight;
-    Color _color = (message.isUser)
+    Color color = (message.isUser)
         ? const Color.fromARGB(255, 172, 247, 175)
         : Colors.white;
     return Container(
@@ -167,10 +166,10 @@ class _AIScreenState extends State<AIScreen> {
               : MainAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.only(top: 12, left: 12, right: 12),
+              padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: _color,
+                color: color,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

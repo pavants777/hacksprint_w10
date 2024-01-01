@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:cmc/Function/firebase_todo.dart';
 import 'package:cmc/Models/TodoUsers.dart';
 import 'package:cmc/Models/todomodels.dart';
-import 'package:cmc/Routes/page_routes.dart';
-import 'package:cmc/Screens/SplashScreens/HomePage.dart';
-import 'package:cmc/Utills/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,7 +56,7 @@ class _ToDoTimerState extends State<ToDoTimer> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
           ),
           onPressed: () {
@@ -69,7 +66,7 @@ class _ToDoTimerState extends State<ToDoTimer> {
           },
         ),
         title: Text(
-          '${widget.todo.title}',
+          widget.todo.title,
           softWrap: false,
           overflow: TextOverflow.ellipsis,
         ),
@@ -101,11 +98,11 @@ class _ToDoTimerState extends State<ToDoTimer> {
                           left: 60,
                           child: Text(
                             '${(hours != null) ? (hours! <= 9 ? '0$hours' : '$hours') : '00'} : ${(minutes != null) ? (minutes! <= 9 ? '0$minutes' : '$minutes') : '00'} : ${seconds != null ? seconds! <= 9 ? '0$seconds' : '$seconds' : '00'}',
-                            style: TextStyle(fontSize: 40),
+                            style: const TextStyle(fontSize: 40),
                           ))
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                   Row(
@@ -133,13 +130,13 @@ class _ToDoTimerState extends State<ToDoTimer> {
                                 MaterialStateProperty.all<Color>(Colors.white),
                           ),
                           onPressed: () {
-                            Get.snackbar("${widget.todo.groupName}",
+                            Get.snackbar(widget.todo.groupName,
                                 "Your Stoping Your timer");
                             FirebaseToDo.changeTime(minutes, hours, seconds,
                                 user?.uid ?? "", widget.todo);
                             timer!.cancel();
                           },
-                          child: Text('Stop',
+                          child: const Text('Stop',
                               style: TextStyle(color: Colors.black))),
                     ],
                   ),
@@ -151,7 +148,7 @@ class _ToDoTimerState extends State<ToDoTimer> {
 
   void timerLogic() {
     Get.snackbar(
-        "${widget.todo.groupName}", "Your Starting ${widget.todo.title} work");
+        widget.todo.groupName, "Your Starting ${widget.todo.title} work");
 
     if (minutes != null && (minutes ?? 0) > 0) {
       setState(() {
@@ -166,7 +163,7 @@ class _ToDoTimerState extends State<ToDoTimer> {
         hours = (hours ?? 0) - 1;
       });
     }
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       int secondref = seconds ?? 0;
       int minuteref = minutes ?? -1;
 
@@ -176,7 +173,7 @@ class _ToDoTimerState extends State<ToDoTimer> {
               minutes, hours, seconds, user?.uid ?? "", widget.todo,
               isCompleted: true);
           setState(() {
-            Get.snackbar("${widget.todo.groupName}",
+            Get.snackbar(widget.todo.groupName,
                 "Your Are Completed Your Task Congrats");
             user?.isCompleted = true;
           });

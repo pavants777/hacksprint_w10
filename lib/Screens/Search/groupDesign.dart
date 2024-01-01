@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class GroupDesign extends StatefulWidget {
   final String groupuid;
 
-  GroupDesign({Key? key, required this.groupuid}) : super(key: key);
+  const GroupDesign({Key? key, required this.groupuid}) : super(key: key);
 
   @override
   State<GroupDesign> createState() => _GroupDesignState();
@@ -33,7 +33,7 @@ class _GroupDesignState extends State<GroupDesign> {
   }
 
   bool userIsInGroup() {
-    List<String>? groupUserIds = group?.users?.map((user) => user).toList();
+    List<String>? groupUserIds = group?.users.map((user) => user).toList();
     return groupUserIds?.contains(currentUserId) ?? false;
   }
 
@@ -66,7 +66,7 @@ class _GroupDesignState extends State<GroupDesign> {
                     CircleAvatar(
                       maxRadius: screenWidth * 0.08,
                       backgroundImage: NetworkImage(
-                          '${group?.profileUrl ?? Constant.image}'),
+                          group?.profileUrl ?? Constant.image),
                     ),
                   ],
                 ),
@@ -76,7 +76,7 @@ class _GroupDesignState extends State<GroupDesign> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${group?.groupName ?? ''}',
+                        group?.groupName ?? '',
                         style: const TextStyle(
                           fontSize: 25,
                           letterSpacing: 3.0,
@@ -86,7 +86,7 @@ class _GroupDesignState extends State<GroupDesign> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Total Members ${group?.users?.length ?? 0}',
+                        'Total Members ${group?.users.length ?? 0}',
                         style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 17,

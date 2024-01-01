@@ -1,17 +1,15 @@
-import 'package:cmc/Models/UserModels.dart';
 import 'package:cmc/Provider/UserProvider.dart';
 import 'package:cmc/Utills/CompanyLogo.dart';
 import 'package:cmc/Utills/Constant.dart';
 import 'package:cmc/Utills/accountScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Widget appBar(String title, BuildContext context) {
-  var _user = Provider.of<UserProvider>(context, listen: false);
+  var user = Provider.of<UserProvider>(context, listen: false);
   return AppBar(
     leading:
-        Padding(padding: EdgeInsets.only(left: 10), child: CompanyLogo(10, 20)),
+        Padding(padding: const EdgeInsets.only(left: 10), child: CompanyLogo(10, 20)),
     title: Text(
       title,
       style: const TextStyle(
@@ -25,7 +23,7 @@ Widget appBar(String title, BuildContext context) {
       GestureDetector(
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AccountScreen()));
+              MaterialPageRoute(builder: (context) => const AccountScreen()));
         },
         child: CircleAvatar(
           radius: 23,
@@ -33,7 +31,7 @@ Widget appBar(String title, BuildContext context) {
           child: CircleAvatar(
             radius: 20,
             backgroundImage:
-                NetworkImage(_user.user?.profilePhoto ?? Constant.image),
+                NetworkImage(user.user?.profilePhoto ?? Constant.image),
           ),
         ),
       ),

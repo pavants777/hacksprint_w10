@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmc/Models/UserModels.dart';
 import 'package:cmc/Provider/UserProvider.dart';
 import 'package:cmc/Routes/page_routes.dart';
 import 'package:cmc/Screens/SplashScreens/UserInfoScreens.dart';
@@ -10,8 +9,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
 
 class FirebaseSplashFunction {
-  static FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static login(String email, password, BuildContext context) async {
     await _auth
@@ -25,7 +24,7 @@ class FirebaseSplashFunction {
         e.message!,
         isDismissible: true,
         dismissDirection: DismissDirection.horizontal,
-        duration: Duration(seconds: 10),
+        duration: const Duration(seconds: 10),
       );
     });
   }
@@ -35,14 +34,14 @@ class FirebaseSplashFunction {
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UserSetUP()));
+          context, MaterialPageRoute(builder: (context) => const UserSetUP()));
     }).catchError((e) {
       Get.snackbar(
         "Error In SignUP",
         e.message!,
         isDismissible: true,
         dismissDirection: DismissDirection.horizontal,
-        duration: Duration(seconds: 10),
+        duration: const Duration(seconds: 10),
       );
     });
   }
@@ -50,7 +49,7 @@ class FirebaseSplashFunction {
   static createUserInfo(
       String userName, url, collegeName, branch, isOnline, isEmail) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    String? email = await FirebaseAuth.instance.currentUser!.email;
+    String? email = FirebaseAuth.instance.currentUser!.email;
     List<String> groups = [];
 
     Map<String, dynamic> data = {

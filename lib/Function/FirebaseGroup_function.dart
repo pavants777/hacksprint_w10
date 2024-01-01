@@ -6,8 +6,6 @@ import 'package:cmc/Models/MessageModels.dart';
 import 'package:cmc/Routes/page_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class FirebaseGroupFunction {
   // Create new Group
@@ -119,7 +117,7 @@ class FirebaseGroupFunction {
 
   static Future<void> sendMessagetoGroup(String groupId, message,
       {isFile = false}) async {
-    String senderId = await FirebaseAuth.instance.currentUser!.uid;
+    String senderId = FirebaseAuth.instance.currentUser!.uid;
 
     final Timestamp timestamp = Timestamp.now();
 
@@ -162,7 +160,7 @@ class FirebaseGroupFunction {
     List<String> currentMembers =
         List<String>.from(groupSnapshot.data()?['users'] ?? []);
     currentMembers.add(uid);
-    Set<String> members = Set<String>();
+    Set<String> members = <String>{};
     members = currentMembers.map((e) => e).toSet();
     currentMembers = members.map((e) => e).toList();
     await groupRef.update({'users': currentMembers});

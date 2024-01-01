@@ -11,11 +11,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
 class GroupHome extends StatefulWidget {
-  GroupHome({super.key});
+  const GroupHome({super.key});
 
   @override
   State<GroupHome> createState() => _GroupHomeState();
@@ -45,30 +44,30 @@ class _GroupHomeState extends State<GroupHome> {
 
   @override
   Widget build(BuildContext context) {
-    var _user = Provider.of<UserProvider>(context, listen: false);
+    var user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: appBar('GroupChats', context) as PreferredSizeWidget?,
       floatingActionButton: SpeedDial(
         backgroundColor: const Color.fromARGB(255, 5, 5, 5),
         animatedIcon: AnimatedIcons.menu_close,
         spacing: 10,
-        childPadding: EdgeInsets.only(top: 10, bottom: 10),
+        childPadding: const EdgeInsets.only(top: 10, bottom: 10),
         onOpen: () {},
         children: [
           SpeedDialChild(
               backgroundColor: Colors.black,
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AIScreen()));
+                    MaterialPageRoute(builder: (context) => const AIScreen()));
               },
-              child: Icon(FontAwesomeIcons.robot)),
+              child: const Icon(FontAwesomeIcons.robot)),
           SpeedDialChild(
             backgroundColor: Colors.black,
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CreateNewGroup()));
+                  MaterialPageRoute(builder: (context) => const CreateNewGroup()));
             },
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           )
         ],
       ),
@@ -87,7 +86,7 @@ class _GroupHomeState extends State<GroupHome> {
                 style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Indicator();
+          return const Indicator();
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(
             child: Text('No Groups Available',
@@ -134,7 +133,7 @@ class _GroupHomeState extends State<GroupHome> {
     String formattedString = '$H : $M';
 
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -152,7 +151,7 @@ class _GroupHomeState extends State<GroupHome> {
                 );
               },
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Container(
                   child: Row(
                     children: [
@@ -165,7 +164,7 @@ class _GroupHomeState extends State<GroupHome> {
                             child: CircleAvatar(
                               maxRadius: screenWidth * 0.09,
                               backgroundImage:
-                                  NetworkImage('${group.profileUrl}'),
+                                  NetworkImage(group.profileUrl),
                             ),
                           ),
                         ],
@@ -176,7 +175,7 @@ class _GroupHomeState extends State<GroupHome> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${group.groupName ?? ''}',
+                              group.groupName ?? '',
                               softWrap: false,
                               style: const TextStyle(
                                 fontSize: 25,
@@ -185,7 +184,7 @@ class _GroupHomeState extends State<GroupHome> {
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               ' ${group.lastMessage}',
                               softWrap: false,
@@ -217,13 +216,13 @@ class _GroupHomeState extends State<GroupHome> {
                     .take(3)
                     .map((tag) => Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 12, 52, 85),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             child: Text(
                               tag,
                               style: const TextStyle(

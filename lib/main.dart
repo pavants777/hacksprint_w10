@@ -51,7 +51,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     void navigatonChange() {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AuthState()));
+          context, MaterialPageRoute(builder: (context) => const AuthState()));
     }
 
     Future.delayed(const Duration(seconds: 2), navigatonChange);
@@ -76,7 +76,7 @@ class AuthState extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          WidgetsBinding.instance!.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             Provider.of<UserProvider>(context, listen: false).initialize();
             Navigator.pushReplacementNamed(context, Routes.homePage);
           });
@@ -89,7 +89,7 @@ class AuthState extends StatelessWidget {
             ),
           );
         } else {
-          WidgetsBinding.instance!.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             Navigator.pushReplacementNamed(context, Routes.loginPage);
           });
           return Container();

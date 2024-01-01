@@ -38,7 +38,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    var _user = Provider.of<UserProvider>(context, listen: false);
+    var user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         elevation: 200,
@@ -58,11 +58,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 Provider.of<UserProvider>(context, listen: false).signOut();
                 Navigator.pushReplacementNamed(context, Routes.loginPage);
               },
-              icon: Icon(
+              icon: const Icon(
                 FontAwesomeIcons.signOut,
                 color: Colors.yellow,
               )),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
         ],
@@ -83,7 +83,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: CircleAvatar(
                     radius: 95,
                     backgroundImage: NetworkImage(
-                        _user.user?.profilePhoto ?? Constant.image),
+                        user.user?.profilePhoto ?? Constant.image),
                   ),
                 ),
                 Positioned(
@@ -97,26 +97,26 @@ class _AccountScreenState extends State<AccountScreen> {
                         context)),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
-              _user.user?.userName ?? 'Unknow',
-              style: TextStyle(color: Colors.yellow, fontSize: 30),
+              user.user?.userName ?? 'Unknow',
+              style: const TextStyle(color: Colors.yellow, fontSize: 30),
             ),
             Text(
-              _user.user?.collegeName ?? 'Unknow',
-              style: TextStyle(
-                  color: const Color.fromARGB(255, 255, 255, 255),
+              user.user?.collegeName ?? 'Unknow',
+              style: const TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
                   fontSize: 20),
             ),
-            Text(_user.user?.branch ?? 'Unknow',
-                style: TextStyle(
-                    color: const Color.fromARGB(255, 255, 255, 255),
+            Text(user.user?.branch ?? 'Unknow',
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 20)),
-            Text(_user.user?.email ?? 'unkown@gmail.com',
-                style: TextStyle(
-                    color: const Color.fromARGB(255, 255, 255, 255),
+            Text(user.user?.email ?? 'unkown@gmail.com',
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
                     fontSize: 20)),
             const SizedBox(
               height: 30,
@@ -157,7 +157,7 @@ class _AccountScreenState extends State<AccountScreen> {
 Widget emailWidget(bool isEmail, BuildContext context) {
   if (isEmail) {
     return Container(
-      padding: EdgeInsets.only(top: 5, right: 10, left: 10, bottom: 5),
+      padding: const EdgeInsets.only(top: 5, right: 10, left: 10, bottom: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100), color: Colors.white),
       child: const Row(
@@ -181,10 +181,10 @@ Widget emailWidget(bool isEmail, BuildContext context) {
   return GestureDetector(
     onTap: () {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => EmailVerification()));
+          MaterialPageRoute(builder: (context) => const EmailVerification()));
     },
     child: Container(
-      padding: EdgeInsets.only(top: 5, right: 10, left: 10, bottom: 5),
+      padding: const EdgeInsets.only(top: 5, right: 10, left: 10, bottom: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100), color: Colors.white),
       child: const Row(

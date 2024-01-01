@@ -26,12 +26,12 @@ class _ToDoHomeState extends State<ToDoHome> {
       appBar: appBar("ToDo's", context) as PreferredSizeWidget?,
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
-            '${formattedDate}',
-            style: TextStyle(
+            formattedDate,
+            style: const TextStyle(
               color: Colors.yellow,
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -48,11 +48,11 @@ class _ToDoHomeState extends State<ToDoHome> {
         stream: FirebaseToDo.getTodo(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Center(
+            return const Center(
               child: Text('Error Genrating'),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Indicator();
+            return const Indicator();
           } else {
             _toDos = snapshot.data;
             _userToDos = _toDos!
@@ -61,7 +61,7 @@ class _ToDoHomeState extends State<ToDoHome> {
                     .toList() ??
                 [];
             if (_userToDos == null || _userToDos!.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text('No To-Do available for You'),
               );
             }
@@ -76,7 +76,7 @@ class _ToDoHomeState extends State<ToDoHome> {
 
   Widget _buildtodoItem(ToDoModels toDo) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: GestureDetector(
         onTap: () {
           Navigator.push(context,
@@ -85,7 +85,7 @@ class _ToDoHomeState extends State<ToDoHome> {
         child: Container(
           width: double.infinity,
           height: 150,
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.yellow,
             border: Border.all(width: 0.5, color: Colors.red),
@@ -129,13 +129,13 @@ class _ToDoHomeState extends State<ToDoHome> {
                     .take(3)
                     .map((tag) => Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 12, 52, 85),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             child: Text(
                               tag,
                               style: const TextStyle(
@@ -155,6 +155,6 @@ class _ToDoHomeState extends State<ToDoHome> {
   }
 
   bool _isUserInGroup(ToDoModels todo, String userId) {
-    return todo.users?.any((user) => user.uid == userId) ?? false;
+    return todo.users.any((user) => user.uid == userId) ?? false;
   }
 }

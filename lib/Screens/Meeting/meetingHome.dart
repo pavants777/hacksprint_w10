@@ -57,7 +57,7 @@ class _MeetingHomeState extends State<MeetingHome> {
                 style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Indicator();
+          return const Indicator();
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(
             child: Text('No Meetings Available',
@@ -72,14 +72,14 @@ class _MeetingHomeState extends State<MeetingHome> {
               [];
 
           if (sortMeeting.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('No Meetings Are Scheduled For You'),
             );
           }
           return ListView.builder(
-            itemCount: sortMeeting?.length ?? 0,
+            itemCount: sortMeeting.length ?? 0,
             itemBuilder: (context, index) {
-              return _buildMeetingsCard(sortMeeting![index]);
+              return _buildMeetingsCard(sortMeeting[index]);
             },
           );
         }
@@ -91,7 +91,7 @@ class _MeetingHomeState extends State<MeetingHome> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -100,13 +100,13 @@ class _MeetingHomeState extends State<MeetingHome> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${meeting.meetingName ?? ''}',
+                      meeting.meetingName ?? '',
                       softWrap: false,
                       style: const TextStyle(
                         fontSize: 25,
@@ -120,7 +120,7 @@ class _MeetingHomeState extends State<MeetingHome> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: TextButton(
                     onPressed: () async {
                       UserModels? user = await FirebaseFunction.getCurrentUser(
@@ -132,15 +132,15 @@ class _MeetingHomeState extends State<MeetingHome> {
                                     roomID: meeting.meetingId,
                                     userName: 'Pavan',
                                     userUid: user!.uid,
-                                    profilePhoto: user!.profilePhoto,
+                                    profilePhoto: user.profilePhoto,
                                     isHost: false,
                                   )));
                     },
-                    child: const Text('Join'),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 0, 2, 125)),
-                    ))),
+                          const Color.fromARGB(255, 0, 2, 125)),
+                    ),
+                    child: const Text('Join'))),
             Container(
               width: screenWidth,
               height: 1,
@@ -155,13 +155,13 @@ class _MeetingHomeState extends State<MeetingHome> {
                     .take(3)
                     .map((tag) => Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 12, 52, 85),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             child: Text(
                               tag,
                               style: const TextStyle(

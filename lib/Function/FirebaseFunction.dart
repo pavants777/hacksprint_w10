@@ -40,11 +40,11 @@ class FirebaseFunction {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance.collection('groups').get();
 
-      querySnapshot.docs.forEach((DocumentSnapshot<Map<String, dynamic>> doc) {
-        GroupModels groupModels = GroupModels.fromJson(doc.data()!);
+      for (var doc in querySnapshot.docs) {
+        GroupModels groupModels = GroupModels.fromJson(doc.data());
 
         allTags.addAll(groupModels.tags);
-      });
+      }
       return allTags;
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -59,13 +59,13 @@ class FirebaseFunction {
       QuerySnapshot<Map<String, dynamic>> snapshot =
           await FirebaseFirestore.instance.collection('groups').get();
 
-      snapshot.docs.forEach((DocumentSnapshot<Map<String, dynamic>> doc) {
-        GroupModels groupModels = GroupModels.fromJson(doc.data()!);
+      for (var doc in snapshot.docs) {
+        GroupModels groupModels = GroupModels.fromJson(doc.data());
 
         res.addAll(groupModels.tags
             .where((tag) => tag.toLowerCase().contains(data.toLowerCase()))
             .map((e) => groupModels));
-      });
+      }
 
       return res;
     } on FirebaseAuthException catch (e) {
@@ -74,7 +74,7 @@ class FirebaseFunction {
         e.message!,
         isDismissible: true,
         dismissDirection: DismissDirection.horizontal,
-        duration: Duration(seconds: 10),
+        duration: const Duration(seconds: 10),
       );
     }
     return [];

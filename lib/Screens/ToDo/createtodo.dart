@@ -1,6 +1,5 @@
 import 'package:cmc/Function/firebase_todo.dart';
 import 'package:cmc/Models/GroupModels.dart';
-import 'package:cmc/Utills/AppBar.dart';
 import 'package:cmc/Utills/CompanyLogo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,18 +14,18 @@ class CreateToDo extends StatefulWidget {
 }
 
 class _CreateToDoState extends State<CreateToDo> {
-  TextEditingController _title = TextEditingController();
+  final TextEditingController _title = TextEditingController();
 
-  TextEditingController _hours = TextEditingController();
+  final TextEditingController _hours = TextEditingController();
 
-  TextEditingController _minutes = TextEditingController();
+  final TextEditingController _minutes = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     List<String>? tags = widget.group?.tags;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New ToDo'),
+        title: const Text('Create New ToDo'),
         centerTitle: true,
       ),
       body: Padding(
@@ -37,20 +36,20 @@ class _CreateToDoState extends State<CreateToDo> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CompanyLogo(150, 150),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               TextField(
                 controller: _title,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(20),
+                  contentPadding: const EdgeInsets.all(20),
                   hintText: 'Title',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -60,7 +59,7 @@ class _CreateToDoState extends State<CreateToDo> {
                       autocorrect: false,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20),
+                        contentPadding: const EdgeInsets.all(20),
                         hintText: 'Hours',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -68,7 +67,7 @@ class _CreateToDoState extends State<CreateToDo> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: TextField(
                       controller: _minutes,
@@ -76,7 +75,7 @@ class _CreateToDoState extends State<CreateToDo> {
                       autocorrect: false,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(20),
+                        contentPadding: const EdgeInsets.all(20),
                         hintText: 'Minutes',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -87,7 +86,7 @@ class _CreateToDoState extends State<CreateToDo> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 child: Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
@@ -103,7 +102,7 @@ class _CreateToDoState extends State<CreateToDo> {
                   }).toList(),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
                   FirebaseToDo.createTodo(
@@ -120,17 +119,17 @@ class _CreateToDoState extends State<CreateToDo> {
                 child: Container(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                   width: 100,
-                  child: Text(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Text(
                     ' Create ',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
               ),

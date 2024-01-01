@@ -6,18 +6,18 @@ import 'package:cmc/main.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
-  static final String startPage = '/';
-  static final String homePage = '/home';
-  static final String loginPage = '/login';
-  static final String signIn = '/signin';
-  static final String meeting = '/meeting';
-  static final String todo = '/todo';
+  static const String startPage = '/';
+  static const String homePage = '/home';
+  static const String loginPage = '/login';
+  static const String signIn = '/signin';
+  static const String meeting = '/meeting';
+  static const String todo = '/todo';
 
   static Map<String, WidgetBuilder> route = {
-    startPage: (context) => StartPage(),
-    homePage: (context) => HomePage(),
-    loginPage: (context) => LoginPage(),
-    signIn: (context) => SignIn(),
-    meeting: (context) => MeetingHome(),
+    startPage: (context) => const StartPage(),
+    homePage: (context) => const HomePage(),
+    loginPage: (context) => const LoginPage(),
+    signIn: (context) => const SignIn(),
+    meeting: (context) => const MeetingHome(),
   };
 }

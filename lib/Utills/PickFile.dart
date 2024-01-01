@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cmc/Function/FirebaseFunction.dart';
 import 'package:cmc/Function/FirebaseGroup_function.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -57,12 +56,12 @@ class _PickFileState extends State<PickFile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.all(50),
-                child: Container(
+                padding: const EdgeInsets.all(50),
+                child: SizedBox(
                   width: double.infinity,
                   height: 400,
                   child: pickedFile == null
-                      ? Container(
+                      ? const SizedBox(
                           width: double.infinity,
                           height: 500,
                         )
@@ -80,7 +79,7 @@ class _PickFileState extends State<PickFile> {
                               bottom: 0,
                               left: 50,
                               child:
-                                  Text('${pickedFile?.name ?? 'Unknown File'}'),
+                                  Text(pickedFile?.name ?? 'Unknown File'),
                             ),
                           ],
                         ),
@@ -93,7 +92,7 @@ class _PickFileState extends State<PickFile> {
                 onPressed: () {
                   selectFile();
                 },
-                child: Text('Select File'),
+                child: const Text('Select File'),
               ),
               const SizedBox(
                 height: 20,
@@ -102,7 +101,7 @@ class _PickFileState extends State<PickFile> {
                 onPressed: () {
                   uploadFile();
                 },
-                child: Text('Upload File'),
+                child: const Text('Upload File'),
               ),
               const SizedBox(
                 height: 20,
@@ -112,7 +111,7 @@ class _PickFileState extends State<PickFile> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final data = snapshot.data;
-                    double progress = data!.bytesTransferred / data!.totalBytes;
+                    double progress = data!.bytesTransferred / data.totalBytes;
                     return Stack(
                       children: [
                         Padding(
