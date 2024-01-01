@@ -1,4 +1,3 @@
-import 'package:cmc/Provider/ToDoProvider.dart';
 import 'package:cmc/Provider/UserProvider.dart';
 import 'package:cmc/Routes/page_routes.dart';
 import 'package:cmc/firebase_options.dart';
@@ -26,7 +25,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => ToDoProvider()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

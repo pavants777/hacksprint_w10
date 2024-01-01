@@ -6,10 +6,12 @@ class Indicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LoadingAnimationWidget.threeRotatingDots(
-        color: Colors.yellow,
-        size: 40,
+    return Container(
+      child: Center(
+        child: LoadingAnimationWidget.threeRotatingDots(
+          color: Colors.yellow,
+          size: 40,
+        ),
       ),
     );
   }

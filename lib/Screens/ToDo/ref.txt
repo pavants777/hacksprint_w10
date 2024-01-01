@@ -3,6 +3,7 @@ import 'package:cmc/Function/firebase_todo.dart';
 import 'package:cmc/Models/todomodels.dart';
 import 'package:cmc/Screens/ToDo/Timer.dart';
 import 'package:cmc/Utills/AppBar.dart';
+import 'package:cmc/Utills/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +39,7 @@ class _ToDoHomeState extends State<ToDoHome> {
   }
 
   void _loadData() async {
-    List<ToDoModels> data = await FirebaseToDo.gettodo();
+    List<ToDoModels> data = await FirebaseToDo.getTodo();
     setState(() {
       _todo = data;
     });
@@ -52,40 +53,45 @@ class _ToDoHomeState extends State<ToDoHome> {
                 _isCompleted(element, FirebaseAuth.instance.currentUser!.uid))
             .toList() ??
         [];
-
     _calculateCompletionRatio();
   }
 
   bool _isUserInGroup(ToDoModels todo, String userId) {
-    return todo.members.any((user) => user == userId);
+    return todo.users?.any((user) => user.uid == userId) ?? false;
   }
 
   bool _isCompleted(ToDoModels todo, String userId) {
-    return todo.completed.any((element) => element == userId);
+    return todo.users.any((element) => element.isCompleted == true);
   }
 
   @override
   Widget build(BuildContext context) {
     DateTime today = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy').format(today);
-    return Scaffold(
-      appBar: appBar("ToDo's", context) as PreferredSizeWidget?,
-      bottomSheet: _buildBottomSheet(),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            '${formattedDate}',
-            style: TextStyle(
-              color: Colors.yellow,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(Duration(seconds: 2));
+        _loadData();
+      },
+      child: Scaffold(
+        appBar: appBar("ToDo's", context) as PreferredSizeWidget?,
+        bottomSheet: _buildBottomSheet(),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 20,
             ),
-          ),
-          Expanded(child: _buildToDoList()),
-        ],
+            Text(
+              '${formattedDate}',
+              style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Expanded(child: _buildToDoList()),
+          ],
+        ),
       ),
     );
   }
@@ -149,17 +155,10 @@ class _ToDoHomeState extends State<ToDoHome> {
         onTap: () {
           int? hours = int.tryParse(toDo.hours);
           int? minutes = int.tryParse(toDo.minutes);
-
           if (hours != null && minutes != null && hours != 0 && minutes != 0) {
             print("Both hours and minutes are zero!");
           } else {
             print('your are completed');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ToDoTimer(todo: toDo),
-              ),
-            );
           }
         },
         child: Container(

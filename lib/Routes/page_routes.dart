@@ -11,6 +11,7 @@ class Routes {
   static final String loginPage = '/login';
   static final String signIn = '/signin';
   static final String meeting = '/meeting';
+  static final String todo = '/todo';
 
   static Map<String, WidgetBuilder> route = {
     startPage: (context) => StartPage(),
