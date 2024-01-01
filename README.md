@@ -1,8 +1,12 @@
-# cmc
+# CMC
 
-A new Flutter project.
+A new Flutter project .
 
 ## Getting Started
+
+## Clone 
+
+   git clone 
 
 This project is a starting point for a Flutter application.
 
