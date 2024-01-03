@@ -58,27 +58,29 @@ class _SearchScreenState extends State<SearchScreen> {
       const SizedBox(height: 10),
       Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: suggestedTags.map((tag) {
-            return Padding(
-              padding: const EdgeInsets.all(5),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _search.text = tag;
-                    isTitle = false;
-                    focusNode.hasFocus;
-                  });
-                },
-                child: Chip(
-                  label: Text(tag),
-                  onDeleted: () => _removeTag(tag),
+        child: Center(
+          child: Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: suggestedTags.map((tag) {
+              return Padding(
+                padding: const EdgeInsets.all(5),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _search.text = tag;
+                      isTitle = false;
+                      focusNode.hasFocus;
+                    });
+                  },
+                  child: Chip(
+                    label: Text(tag),
+                    onDeleted: () => _removeTag(tag),
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
       )
     ]);
@@ -123,7 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-            padding: EdgeInsets.only(left: 10), child: CompanyLogo(100, 100)),
+            padding: const EdgeInsets.only(left: 10),
+            child: CompanyLogo(100, 100)),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: AnimatedCrossFade(
@@ -131,7 +134,7 @@ class _SearchScreenState extends State<SearchScreen> {
           secondChild: Search(),
           crossFadeState:
               isTitle ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-          duration: Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 100),
         ),
         actions: [
           IconButton(
@@ -140,13 +143,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 isTitle = !isTitle;
               });
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
         ],
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           _search.text.isNotEmpty
@@ -158,7 +161,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget Title() {
-    return Text(
+    return const Text(
       "Search Groups",
       style: TextStyle(
         fontSize: 30,

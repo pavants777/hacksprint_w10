@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmc/Routes/page_routes.dart';
+import 'package:cmc/Utills/CompanyLogo.dart';
 import 'package:cmc/Utills/Constant.dart';
 import 'package:flutter/material.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
@@ -51,13 +52,7 @@ class _LivePageState extends State<LivePage> {
                 return true;
               })
             : ZegoUIKitPrebuiltLiveAudioRoomConfig.audience()
-          ..seatConfig.avatarBuilder = (BuildContext context, Size size,
-              ZegoUIKitUser? user, Map extraInfo) {
-            return CircleAvatar(
-              maxRadius: size.width,
-              backgroundImage: NetworkImage(widget.profilePhoto),
-            );
-          },
+          ..userAvatarUrl = widget.profilePhoto,
       ),
     );
   }

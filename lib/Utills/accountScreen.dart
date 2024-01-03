@@ -38,7 +38,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    var user = Provider.of<UserProvider>(context, listen: false);
+    var _user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         elevation: 200,
@@ -83,7 +83,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   child: CircleAvatar(
                     radius: 95,
                     backgroundImage: NetworkImage(
-                        user.user?.profilePhoto ?? Constant.image),
+                        _user.user?.profilePhoto ?? Constant.image),
                   ),
                 ),
                 Positioned(
@@ -101,23 +101,20 @@ class _AccountScreenState extends State<AccountScreen> {
               height: 10,
             ),
             Text(
-              user.user?.userName ?? 'Unknow',
+              _user.user?.userName ?? 'Unknow',
               style: const TextStyle(color: Colors.yellow, fontSize: 30),
             ),
             Text(
-              user.user?.collegeName ?? 'Unknow',
+              _user.user?.collegeName ?? 'Unknow',
               style: const TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 20),
+                  color: Color.fromARGB(255, 255, 255, 255), fontSize: 20),
             ),
-            Text(user.user?.branch ?? 'Unknow',
+            Text(_user.user?.branch ?? 'Unknow',
                 style: const TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 20)),
-            Text(user.user?.email ?? 'unkown@gmail.com',
+                    color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
+            Text(_user.user?.email ?? 'unkown@gmail.com',
                 style: const TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 20)),
+                    color: Color.fromARGB(255, 255, 255, 255), fontSize: 20)),
             const SizedBox(
               height: 30,
             ),
@@ -142,9 +139,7 @@ class _AccountScreenState extends State<AccountScreen> {
             CustomButton(
               "Privacy Policy",
               FontAwesomeIcons.shieldHalved,
-              () {
-                //TODO: Launch URL in webView
-              },
+              () {},
               screenWidth,
             ),
           ],
@@ -181,7 +176,7 @@ Widget emailWidget(bool isEmail, BuildContext context) {
   return GestureDetector(
     onTap: () {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const EmailVerification()));
+          MaterialPageRoute(builder: (context) => EmailVerification()));
     },
     child: Container(
       padding: const EdgeInsets.only(top: 5, right: 10, left: 10, bottom: 5),
