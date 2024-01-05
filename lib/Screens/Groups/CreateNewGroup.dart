@@ -13,16 +13,17 @@ class CreateNewGroup extends StatefulWidget {
 }
 
 class _CreateNewGroupState extends State<CreateNewGroup> {
-  final TextEditingController _groupNameEditingController = TextEditingController();
+  final TextEditingController _groupNameEditingController =
+      TextEditingController();
   final TextEditingController _tagsEditingController = TextEditingController();
   String profileUrl = Constant.image;
   File? image;
   List<String> tags = [];
 
   Future<void> selectImage() async {
-    File? image = await pickImageFromGallery(context);
+    File? imagePath = await pickImageFromGallery(context);
     setState(() {
-      image = image;
+      image = imagePath;
     });
   }
 

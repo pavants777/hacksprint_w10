@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               body: page,
               bottomNavigationBar: BottomNavigationBar(
                 elevation: 10,
-                selectedItemColor: Colors.yellow,
+                selectedItemColor: const Color.fromARGB(255, 251, 242, 158),
                 unselectedItemColor: Colors.grey.shade400,
                 type: BottomNavigationBarType.fixed,
                 items: const [

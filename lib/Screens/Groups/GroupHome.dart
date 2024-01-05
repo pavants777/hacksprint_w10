@@ -6,6 +6,9 @@ import 'package:cmc/Screens/Groups/AI/ChatWithAi.dart';
 import 'package:cmc/Screens/Groups/ChatPage.dart';
 import 'package:cmc/Screens/Groups/CreateNewGroup.dart';
 import 'package:cmc/Utills/AppBar.dart';
+import 'package:cmc/Utills/Constant.dart';
+import 'package:cmc/Utills/Drawer.dart';
+import 'package:cmc/Utills/accountScreen.dart';
 import 'package:cmc/Utills/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +24,10 @@ class GroupHome extends StatefulWidget {
 }
 
 class _GroupHomeState extends State<GroupHome> {
+  GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
   late List<GroupModels> groups;
   UserModels? user;
-  String? uid = FirebaseAuth.instance.currentUser!.uid;
+  String? uid = FirebaseAuth.instance.currentUser?.uid;
 
   @override
   void initState() {
@@ -46,7 +50,48 @@ class _GroupHomeState extends State<GroupHome> {
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
-      appBar: appBar('GroupChats', context) as PreferredSizeWidget?,
+      key: _scaffoldstate,
+      appBar: AppBar(
+        leading: GestureDetector(
+          child: Icon(Icons.menu),
+          onTap: () {
+            print('Ontap');
+            _scaffoldstate.currentState?.openDrawer();
+          },
+        ),
+        title: Text(
+          'GroupChat',
+          style: const TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 246, 235, 141),
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AccountScreen()));
+            },
+            child: CircleAvatar(
+              radius: 23,
+              backgroundColor: Color.fromARGB(255, 255, 128, 111),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundImage:
+                    NetworkImage(user.user?.profilePhoto ?? Constant.image),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
+      drawer: DrawerForApp(),
       floatingActionButton: SpeedDial(
         backgroundColor: const Color.fromARGB(255, 5, 5, 5),
         animatedIcon: AnimatedIcons.menu_close,
@@ -64,8 +109,10 @@ class _GroupHomeState extends State<GroupHome> {
           SpeedDialChild(
             backgroundColor: Colors.black,
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CreateNewGroup()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CreateNewGroup()));
             },
             child: const Icon(Icons.add),
           )
@@ -137,7 +184,7 @@ class _GroupHomeState extends State<GroupHome> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.yellow,
+          color: Color.fromARGB(255, 250, 233, 82),
         ),
         child: Column(
           children: [
@@ -163,8 +210,7 @@ class _GroupHomeState extends State<GroupHome> {
                             backgroundColor: Colors.pink,
                             child: CircleAvatar(
                               maxRadius: screenWidth * 0.09,
-                              backgroundImage:
-                                  NetworkImage(group.profileUrl),
+                              backgroundImage: NetworkImage(group.profileUrl),
                             ),
                           ),
                         ],
@@ -215,8 +261,8 @@ class _GroupHomeState extends State<GroupHome> {
                 children: group.tags
                     .take(3)
                     .map((tag) => Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 12, 52, 85),
                             borderRadius: BorderRadius.circular(12),

@@ -23,15 +23,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -65,5 +59,23 @@ class DefaultFirebaseOptions {
     messagingSenderId: '754779193821',
     projectId: 'cmc1-820fd',
     storageBucket: 'cmc1-820fd.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDXlrub_RNZaFaep0eDEBg0p6bDoHGMEKs',
+    appId: '1:754779193821:ios:5d61ac3b647710841c3634',
+    messagingSenderId: '754779193821',
+    projectId: 'cmc1-820fd',
+    storageBucket: 'cmc1-820fd.appspot.com',
+    iosBundleId: 'com.example.cmc',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDXlrub_RNZaFaep0eDEBg0p6bDoHGMEKs',
+    appId: '1:754779193821:ios:a7377cd1d1715e551c3634',
+    messagingSenderId: '754779193821',
+    projectId: 'cmc1-820fd',
+    storageBucket: 'cmc1-820fd.appspot.com',
+    iosBundleId: 'com.example.cmc.RunnerTests',
   );
 }

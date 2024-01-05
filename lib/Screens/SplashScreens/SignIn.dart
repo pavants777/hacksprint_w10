@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CompanyLogo(150, 150),
+                CompanyLogo(200, 200),
                 Padding(padding: EdgeInsets.all(screenWidth * 0.02)),
                 SizedBox(
                     width: 300,
@@ -108,7 +108,7 @@ class _SignInState extends State<SignIn> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(50)),
                     child: const Text(
-                      'SingIn',
+                      'SignIn',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,

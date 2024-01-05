@@ -128,8 +128,8 @@ class _ToDoHomeState extends State<ToDoHome> {
                 children: toDo.tags
                     .take(3)
                     .map((tag) => Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 12, 52, 85),
                             borderRadius: BorderRadius.circular(12),

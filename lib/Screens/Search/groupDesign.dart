@@ -53,7 +53,7 @@ class _GroupDesignState extends State<GroupDesign> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Colors.yellow,
+            color: const Color.fromARGB(255, 244, 231, 120),
           ),
           child: Padding(
             padding:
@@ -65,8 +65,8 @@ class _GroupDesignState extends State<GroupDesign> {
                   children: [
                     CircleAvatar(
                       maxRadius: screenWidth * 0.08,
-                      backgroundImage: NetworkImage(
-                          group?.profileUrl ?? Constant.image),
+                      backgroundImage:
+                          NetworkImage(group?.profileUrl ?? Constant.image),
                     ),
                   ],
                 ),

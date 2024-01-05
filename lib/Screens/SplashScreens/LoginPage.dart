@@ -28,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CompanyLogo(200.0, 200.0),
-                Padding(padding: EdgeInsets.all(screenWidth * 0.05)),
+                CompanyLogo(300.0, 300.0),
+                Padding(padding: EdgeInsets.all(screenWidth * 0.02)),
                 SizedBox(
                     width: 300,
                     child: TextField(

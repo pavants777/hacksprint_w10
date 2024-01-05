@@ -60,7 +60,7 @@ class _StartPageState extends State<StartPage> {
       resizeToAvoidBottomInset: false,
       body: PageView(
         children: [
-          Image.asset('assets/logo.png'),
+          Image.asset('assets/logo2.png'),
         ],
       ),
     );

@@ -25,9 +25,9 @@ class _UserSetUPState extends State<UserSetUP> {
   File? image;
 
   Future<void> selectImage() async {
-    File? image = await pickImageFromGallery(context);
+    File? imagePath = await pickImageFromGallery(context);
     setState(() {
-      image = image;
+      image = imagePath;
     });
   }
 
@@ -125,8 +125,10 @@ class _UserSetUPState extends State<UserSetUP> {
               GestureDetector(
                 onTap: () async {
                   setUserSetUp();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Indicator()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Indicator()));
                   await Future.delayed(const Duration(seconds: 5));
                   Provider.of<UserProvider>(context, listen: false)
                       .initialize();

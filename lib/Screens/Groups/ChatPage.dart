@@ -60,16 +60,26 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<void> getUser() async {
-    var querySnapshot =
-        await FirebaseFirestore.instance.collection('users').get();
-    GroupModels demogroup =
-        await FirebaseGroupFunction.getGroup(widget.groupId);
-    setState(() {
-      group = demogroup;
-      users = querySnapshot.docs
-          .map((doc) => UserModels.fromJson(doc.data()))
-          .toList();
-    });
+    try {
+      var querySnapshot =
+          await FirebaseFirestore.instance.collection('users').get();
+
+      if (widget.groupId != null) {
+        GroupModels demogroup =
+            await FirebaseGroupFunction.getGroup(widget.groupId!);
+        if (demogroup != null) {
+          setState(() {
+            group = demogroup;
+            users = querySnapshot.docs
+                .map((doc) =>
+                    UserModels.fromJson(doc.data() as Map<String, dynamic>))
+                .toList();
+          });
+        } else {}
+      } else {}
+    } catch (error) {
+      print('Error in getUser: $error');
+    }
   }
 
   _sendMessagetoGroup() async {
@@ -98,8 +108,8 @@ class _ChatPageState extends State<ChatPage> {
                     backgroundColor: Colors.pink,
                     child: CircleAvatar(
                       maxRadius: screenWidth * 0.045,
-                      backgroundImage: NetworkImage(
-                          group?.profileUrl ?? Constant.image),
+                      backgroundImage:
+                          NetworkImage(group?.profileUrl ?? Constant.image),
                     ),
                   ),
                   SizedBox(
@@ -171,10 +181,11 @@ class _ChatPageState extends State<ChatPage> {
                         text: 'Create New Work',
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CreateToDo(group: group)));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateToDo(group: group),
+                            ),
+                          );
                         },
                       ),
                     ];
