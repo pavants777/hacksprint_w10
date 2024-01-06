@@ -10,6 +10,7 @@ class FirebaseToDo {
       String title,
       String hours,
       String minutes,
+      String file,
       List<String> completed,
       List<String> tags,
       List<String> members,
@@ -23,6 +24,7 @@ class FirebaseToDo {
               hours: hours,
               minutes: minutes,
               seconds: seconds,
+              file: file,
               isCompleted: false,
             ))
         .toList();
@@ -75,7 +77,7 @@ class FirebaseToDo {
 
   static Future<void> changeTime(
       int? minutes, int? hours, int? seconds, String uid, ToDoModels todo,
-      {isCompleted = false}) async {
+      {isCompleted = false, String file = ''}) async {
     print('function call');
     DateTime today = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(today);
@@ -83,7 +85,12 @@ class FirebaseToDo {
       ToDoUsers userToUpdate = todo.users.firstWhere(
         (user) => user.uid == uid,
         orElse: () => ToDoUsers(
-            uid: '', hours: '', minutes: '', seconds: '', isCompleted: false),
+            uid: '',
+            hours: '',
+            minutes: '',
+            seconds: '',
+            file: '',
+            isCompleted: false),
       );
 
       if (userToUpdate.uid.isNotEmpty) {
@@ -91,6 +98,7 @@ class FirebaseToDo {
         userToUpdate.minutes = minutes.toString();
         userToUpdate.seconds = seconds.toString();
         userToUpdate.isCompleted = isCompleted;
+        userToUpdate.file = file;
         List<ToDoUsers> updatedUsers = List.from(todo.users);
         int index = updatedUsers.indexWhere((user) => user.uid == uid);
         if (index != -1) {
@@ -119,6 +127,37 @@ class FirebaseToDo {
       }
     } catch (e) {
       print('Error updating time: $e');
+    }
+  }
+
+  static Stream<List<ToDoUsers>> getCompletedUser(ToDoModels todo) async* {
+    DateTime today = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd').format(today);
+
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await FirebaseFirestore.instance
+              .collection('todo')
+              .doc(formattedDate)
+              .collection('data')
+              .doc(todo.refId)
+              .get();
+      if (documentSnapshot.exists) {
+        Map<String, dynamic> data = documentSnapshot.data()!;
+        List<ToDoUsers> completedUsers = [];
+
+        List<Map<String, dynamic>> usersData =
+            List<Map<String, dynamic>>.from(data['users']);
+
+        completedUsers = usersData
+            .where((userData) => userData['isCompleted'] == true)
+            .map((userData) => ToDoUsers.fromJson(userData))
+            .toList();
+        print(completedUsers);
+        yield completedUsers;
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
     }
   }
 }

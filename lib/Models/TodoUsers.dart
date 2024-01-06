@@ -3,12 +3,14 @@ class ToDoUsers {
   String hours;
   String minutes;
   String seconds;
+  String file;
   bool isCompleted;
 
   ToDoUsers(
       {required this.uid,
       required this.hours,
       required this.seconds,
+      required this.file,
       required this.minutes,
       required this.isCompleted});
 
@@ -18,6 +20,7 @@ class ToDoUsers {
         hours: json['hours'],
         seconds: json['seconds'],
         minutes: json['minutes'],
+        file: json['file'],
         isCompleted: json['isCompleted']);
   }
 
@@ -27,6 +30,7 @@ class ToDoUsers {
       'hours': hours,
       'minutes': minutes,
       'seconds': seconds,
+      'file': file,
       'isCompleted': isCompleted,
     };
   }

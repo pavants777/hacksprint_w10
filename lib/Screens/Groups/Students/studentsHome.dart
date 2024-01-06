@@ -1,6 +1,8 @@
 import 'package:cmc/Function/getStudent.dart';
 import 'package:cmc/Models/UserModels.dart';
 import 'package:cmc/Provider/UserProvider.dart';
+import 'package:cmc/Screens/Groups/Students/ProfilView.dart';
+import 'package:cmc/Utills/Constant.dart';
 import 'package:cmc/Utills/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -55,26 +57,54 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   Widget _buildUserCard(UserModels user) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SizedBox(height: 10),
-            Text(
-              '${user.userName}',
-              style: TextStyle(fontSize: 20),
-            ),
-            user.isEmail
-                ? Icon(
-                    Icons.verified,
-                    color: Colors.green,
-                  )
-                : Container(),
-            SizedBox(height: 10),
-          ]),
-          Text('${user.email}')
-        ],
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProfileView(
+                        user: user,
+                      )));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(children: [
+                CircleAvatar(
+                  radius: 23,
+                  backgroundColor: Colors.yellow,
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundImage:
+                        NetworkImage(user.profilePhoto ?? Constant.image),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  width: 70,
+                ),
+                Text(
+                  '${user.userName}',
+                  style: TextStyle(fontSize: 20),
+                ),
+                user.isEmail
+                    ? Icon(
+                        Icons.verified,
+                        color: Colors.green,
+                      )
+                    : Container(),
+                SizedBox(height: 10),
+              ]),
+              Text('${user.email}')
+            ],
+          ),
+        ),
       ),
     );
   }

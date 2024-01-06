@@ -46,6 +46,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   loading_indicator: ^3.1.1
   open_file: ^3.3.2
+  path_provider: ^2.1.1
   provider: ^6.1.1
   zego_uikit_prebuilt_live_audio_room: ^2.15.2
 

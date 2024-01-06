@@ -114,6 +114,7 @@ class _CreateToDoState extends State<CreateToDo> {
                         _title.text,
                         _hours.text,
                         _minutes.text,
+                        '',
                         [],
                         tags,
                         widget.group?.users ?? []);

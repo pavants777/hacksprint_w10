@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cmc/Function/firebase_todo.dart';
 import 'package:cmc/Models/TodoUsers.dart';
 import 'package:cmc/Models/todomodels.dart';
+import 'package:cmc/Screens/ToDo/uploadTask.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,12 @@ class _ToDoTimerState extends State<ToDoTimer> {
     ToDoUsers currentUser = widget.todo.users.firstWhere(
       (user) => user.uid == FirebaseAuth.instance.currentUser!.uid,
       orElse: () => ToDoUsers(
-          uid: '', hours: '', minutes: '', seconds: '', isCompleted: false),
+          uid: '',
+          hours: '',
+          minutes: '',
+          seconds: '',
+          file: '',
+          isCompleted: false),
     );
     setState(() {
       user = currentUser;
@@ -74,7 +80,7 @@ class _ToDoTimerState extends State<ToDoTimer> {
         elevation: 10,
       ),
       body: user!.isCompleted
-          ? _buildCompletedWidget()
+          ? UploadTask(todo: widget.todo)
           : Container(
               alignment: Alignment.center,
               child: Column(
@@ -173,8 +179,8 @@ class _ToDoTimerState extends State<ToDoTimer> {
               minutes, hours, seconds, user?.uid ?? "", widget.todo,
               isCompleted: true);
           setState(() {
-            Get.snackbar(widget.todo.groupName,
-                "Your Are Completed Your Task Congrats");
+            Get.snackbar(
+                widget.todo.groupName, "Your Are Completed Your Task Congrats");
             user?.isCompleted = true;
           });
         }
@@ -207,60 +213,5 @@ class _ToDoTimerState extends State<ToDoTimer> {
   void dispose() {
     timer?.cancel();
     super.dispose();
-  }
-
-  Widget _buildCompletedWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Stack(
-            children: [
-              SizedBox(
-                width: 300,
-                height: 300,
-                child: CircularProgressIndicator(
-                  value: 1,
-                  strokeWidth: 20,
-                  color: Colors.green,
-                ),
-              ),
-              Positioned(
-                bottom: 50,
-                left: 60,
-                child: Icon(
-                  Icons.check,
-                  size: 200,
-                  color: Colors.green,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          const Text(
-            'Completed',
-            style: TextStyle(
-                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text(
-              'Back',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
