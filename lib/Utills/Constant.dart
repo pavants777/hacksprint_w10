@@ -2,7 +2,7 @@ class Constant {
   static String image =
       'https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp';
   static const String api_key =
-      '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';
+      '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';
   static const String api_url = 'https://api.openai.com/v1/chat/completions';
   static int appId = 977084063;
   static String appSign =

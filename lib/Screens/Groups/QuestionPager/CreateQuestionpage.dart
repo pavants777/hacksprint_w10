@@ -41,7 +41,7 @@ class _SendQuestionPaperState extends State<SendQuestionPaper> {
       uploadTask = null;
     });
 
-    QuestionFunction.sendQuestionPaper(_name.text, downloadURL, _year.text,
+    QuestionFunction.sendQuestionPaper(_name.text, pickedFile!.name, _year.text,
         _sem.text, _subjectName.text, true, context);
   }
 
@@ -94,7 +94,7 @@ class _SendQuestionPaperState extends State<SendQuestionPaper> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(20),
                     prefixIcon: const Icon(FontAwesomeIcons.userNinja),
-                    hintText: 'SubjectName',
+                    hintText: 'Subject Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
