@@ -8,8 +8,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -17,9 +15,6 @@ Future<void> main() async {
   );
   runApp(const MyApp());
 }
-
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
